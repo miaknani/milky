@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="MILKY is a queer DJ based in Glasgow, playing weddings, club nights and parties.">
+<title>MILKY DJ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: one long scroll, left-aligned. Huge wordmark opens it; each section is a heading column beside a content column.
+   Boldness lives in two places only: the wordmark and the pink-to-red tempo gradient (slow = pink, peak = red). */
+:root {
+  --bg: #FFF4F6;
+  --surface: #FFFFFF;
+  --fg: #2B0B17;
+  --muted: #7A4558;
+  --line: #F1CFDA;
+  --red: #D90429;
+  --pink: #FF4D94;
+  --on-red: #FFFFFF;
+  --placeholder: #FCE6EC;
+  --display: 'Bagel Fat One', 'Arial Rounded MT Bold', 'Trebuchet MS', sans-serif;
+  --body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1D0A12; --surface: #2C1019; --fg: #FFF0F4; --muted: #E2AABD; --line: #4B1E2F;
+    --red: #FF5C70; --pink: #FF8DBB; --on-red: #1D0A12; --placeholder: #28101A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1D0A12; --surface: #2C1019; --fg: #FFF0F4; --muted: #E2AABD; --line: #4B1E2F;
+  --red: #FF5C70; --pink: #FF8DBB; --on-red: #1D0A12; --placeholder: #28101A;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+img { max-width: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+  margin: 0;
+}
+.col { max-width: 1080px; margin: 0 auto; }
+p { margin: 0 0 1rem; max-width: 62ch; }
+a { color: var(--red); }
+:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+
+[hidden] { display: none !important; }
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1.1rem; padding-block: .8rem; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.view > .section:first-child { border-top: 0; }
+.foot-nav { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; margin-bottom: .75rem; }
+.foot-nav a { color: var(--fg); font-family: var(--body); font-size: .95rem; font-weight: 500; text-decoration: none; }
+.foot-nav a:hover { color: var(--red); }
+@media (min-width: 640px) { .nav { gap: .4rem 1.4rem; } }
+@media (max-width: 639px) { .nav .brand { display: none; } }
+@media (max-width: 479px) { .nav { column-gap: .8rem; } .nav a { font-size: .9rem; } }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 500; font-size: .95rem; padding: .3rem 0; border-bottom: 2px solid transparent; }
+.nav a:hover { color: var(--red); }
+.nav a[aria-current="page"] { color: var(--red); border-bottom-color: var(--red); }
+.nav .brand { font-family: var(--display); font-size: 1.6rem; line-height: 1; color: var(--red); margin-right: .8rem; border-bottom: 0; }
+/* Hero */
+.hero { padding-block: 1.75rem 3.5rem; }
+.kicker { font-family: var(--mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 .5rem; }
+h1 {
+  font-family: var(--display); font-weight: 400; color: var(--red);
+  font-size: clamp(4.5rem, 21vw, 13rem); line-height: .86; letter-spacing: -.02em; margin: 0 0 1.5rem;
+}
+.lede { font-size: clamp(1.25rem, 3.2vw, 1.75rem); line-height: 1.35; font-weight: 500; max-width: 30ch; margin-bottom: 1.5rem; }
+.hero-top { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: end; margin-bottom: 1.75rem; }
+.hero-name { min-width: 0; }
+.hero-name h1 { margin-bottom: 1.25rem; }
+.hero-name .lede { margin-bottom: 0; }
+.hero-photo { display: block; width: 100%; height: auto; max-width: 420px; aspect-ratio: 9 / 10; object-fit: cover; border-radius: 6px; }
+@media (min-width: 820px) {
+  .hero-top { grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); gap: 3rem; }
+  .hero-name h1 { font-size: clamp(5.5rem, 10.5vw, 9rem); }
+  .hero-photo { max-width: none; }
+}
+.tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.75rem; padding: 0; list-style: none; }
+.tags li { font-family: var(--mono); font-size: .82rem; letter-spacing: .04em; border: 1.5px solid var(--fg); padding: .3rem .7rem; border-radius: 999px; }
+.proof { list-style: none; margin: 0 0 1.75rem; padding: 1rem 0 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem 2rem; max-width: 52rem; }
+.proof li { display: grid; gap: .1rem; min-width: 0; }
+.proof b { font-size: 1.1rem; font-weight: 600; }
+.proof span { color: var(--muted); font-size: .92rem; }
+.btn { display: inline-block; background: var(--red); color: var(--on-red); text-decoration: none; font-weight: 600; padding: .85rem 1.4rem; border-radius: 999px; }
+.btn:hover { background: var(--fg); color: var(--bg); }
+.heat { height: 10px; border-radius: 5px; background: linear-gradient(90deg, var(--pink), var(--red)); margin-top: 3rem; }
+.heat-cap { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--mono); font-size: .78rem; color: var(--muted); margin-top: .5rem; }
+
+/* Sections */
+.section { display: grid; grid-template-columns: 1fr; gap: 1.25rem 3rem; padding-block: 3.5rem; border-top: 1px solid var(--line); }
+@media (min-width: 820px) { .section { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); } }
+.section > * { min-width: 0; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.05rem; margin: 0 0 .25rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; margin: 0 0 1.75rem; padding: 0; }
+.chips li { background: var(--surface); border: 1.5px solid var(--line); border-radius: 999px; padding: .35rem .85rem; font-weight: 500; font-size: .95rem; }
+.chips li.more { background: none; border-style: dashed; border-color: var(--muted); color: var(--muted); font-weight: 400; }
+.played h3 { font-family: var(--mono); font-size: .8rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 .75rem; }
+.played .chips:last-child { margin-bottom: 0; }
+.points { display: grid; gap: 1.25rem; margin: 1.5rem 0 2rem; }
+.points p { margin: 0; color: var(--muted); }
+.points h3 { color: var(--fg); }
+
+/* Wedding evening by tempo */
+.arc { margin: 1rem 0 .75rem; }
+.arc-cap { font-family: var(--mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 .75rem; }
+.arc-row { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "l v" "t t"; gap: .25rem .75rem; align-items: center; margin-bottom: .9rem; }
+.arc-l { grid-area: l; font-weight: 500; }
+.arc-v { grid-area: v; font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+.arc-t { grid-area: t; position: relative; height: 14px; border-right: 1px solid var(--line);
+  background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 25% 100%; }
+.arc-b { position: absolute; top: 2px; bottom: 2px; border-radius: 5px; background: color-mix(in srgb, var(--red) calc(var(--t) * 100%), var(--pink)); }
+.axis .arc-t { height: 1.4rem; background: none; border: 0; }
+.axis .arc-t span { position: absolute; top: 0; transform: translateX(-50%); font-family: var(--mono); font-size: .75rem; color: var(--muted); }
+@media (min-width: 640px) {
+  .arc-row { grid-template-columns: 9.5rem 1fr 5.5rem; grid-template-areas: "l t v"; }
+  .arc-v { text-align: right; }
+}
+.note { font-size: .95rem; color: var(--muted); }
+
+/* Set list */
+.set { list-style: none; margin: 1.25rem 0 0; padding: 0; border-top: 1px solid var(--line); }
+.set li { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr) minmax(56px, 26%); gap: .75rem; align-items: center; padding: .6rem 0; border-bottom: 1px solid var(--line); }
+.bpm { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .92rem; color: var(--muted); }
+.trk b { display: block; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+.trk i { display: block; font-style: normal; color: var(--muted); font-size: .9rem; overflow-wrap: anywhere; }
+.bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.bar span { display: block; height: 100%; width: var(--w); border-radius: 4px; background: var(--pink); background: color-mix(in srgb, var(--red) calc(var(--t) * 100%), var(--pink)); }
+
+/* Media placeholders */
+.todo { display: grid; place-items: center; text-align: center; padding: 1rem; background: var(--placeholder); border: 1.5px dashed var(--muted); color: var(--muted); font-size: .92rem; border-radius: 6px; }
+.photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; margin-bottom: .75rem; }
+.photos { align-items: start; }
+.photos img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.video { aspect-ratio: 16 / 9; max-width: 100%; margin-bottom: 1.25rem; }
+.clipfig { margin: 0 0 1.25rem; }
+.clip { display: block; width: 100%; max-width: 340px; aspect-ratio: 9 / 16; background: #000; border-radius: 6px; }
+.clipfig figcaption { margin-top: .5rem; font-size: .9rem; color: var(--muted); }
+.listen { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.listen li { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: .75rem 1rem; border: 1.5px dashed var(--muted); border-radius: 6px; color: var(--muted); }
+.listen b { color: var(--fg); font-weight: 600; }
+
+/* Enquire */
+.contact { display: grid; gap: .6rem; margin-top: 1.5rem; max-width: 34rem; }
+.contact div { display: flex; justify-content: space-between; align-items: baseline; gap: .25rem 1rem; flex-wrap: wrap; padding: .8rem 1rem; border: 1.5px solid var(--line); background: var(--surface); border-radius: 6px; }
+.contact a { font-weight: 600; overflow-wrap: anywhere; }
+.contact span:first-child { font-family: var(--mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+footer { border-top: 1px solid var(--line); padding-block: 1.75rem 2.5rem; font-family: var(--mono); font-size: .8rem; color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+</style>
+
+</head>
+<body>
+<div class="col">
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="#home">MILKY</a>
+    <a href="#home" data-nav="home" aria-current="page">Home</a>
+    <a href="#weddings" data-nav="weddings">Weddings</a>
+    <a href="#set-list" data-nav="set-list">Set list</a>
+    <a href="#watch" data-nav="watch">Watch</a>
+    <a href="#contact" data-nav="contact">Contact</a>
+  </nav>
+
+  <div class="view" id="home">
+  <header class="hero">
+    <div class="hero-top">
+      <div class="hero-name">
+        <p class="kicker">Queer DJ &middot; Glasgow</p>
+        <h1>MILKY</h1>
+        <p class="lede">I play weddings, club nights and parties where the point is a full dance floor.</p>
+      </div>
+      <img class="hero-photo" src="milky-portrait.jpg" width="600" height="666" alt="MILKY mixing on vinyl decks">
+    </div>
+    <ul class="tags">
+      <li>Weddings</li>
+      <li>Club nights</li>
+      <li>Private parties</li>
+    </ul>
+    <ul class="proof">
+      <li><b>Almost 20 years</b><span>behind the decks</span></li>
+      <li><b>Ran my own club nights</b><span>in Glasgow</span></li>
+      <li><b>Hundreds of gigs</b><span>parties, weddings, bars, club nights</span></li>
+    </ul>
+    <a class="btn" href="#contact">Ask about a date</a>
+    <div class="heat" role="img" aria-label="Tempo range from 93 to 128 beats per minute, pink at the slow end and red at the fast end"></div>
+    <div class="heat-cap"><span>93 BPM</span><span>128 BPM &middot; last night's range</span></div>
+  </header>
+
+  <section class="section">
+    <h2>Hi, I'm MILKY</h2>
+    <div>
+      <p>I've been obsessed with music since I was young. A school friend nicknamed me DJ because I was always the one making the playlists for parties and the hockey bus, and it stuck.</p>
+      <p>I'm a queer DJ in Glasgow and I've been behind the decks for almost 20 years. I used to run my own club nights here, and I've played hundreds of parties, weddings, bars and club nights. I play pop, dance, house, disco and hip-hop, and I shape each set around who is in the room. A wedding with three generations dancing sounds different from a club night at 1am, and I plan for both.</p>
+      <p>Music brings me a lot of joy, and what I love most is giving that to a room full of people who want to dance. Before any booking I ask what you love and what you can't stand, then I build the night from there.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Where I've played</h2>
+    <div class="played">
+      <h3>Queer club nights</h3>
+      <ul class="chips">
+        <li>Shoot Your Shot</li>
+        <li>Push It</li>
+        <li>MENERGY</li>
+        <li>Lock Up Your Daughters</li>
+        <li>TYCI</li>
+        <li>Birdcage</li>
+      </ul>
+      <h3>Clubs and venues</h3>
+      <ul class="chips">
+        <li>Sub Club</li>
+        <li>Stereo</li>
+        <li>Saint Judes</li>
+        <li>Flat 01</li>
+        <li>Nice N Sleazys</li>
+        <li>La Cheetah</li>
+        <li>The Berkeley Suite</li>
+        <li>The Flying Duck</li>
+        <li>Hummingbird</li>
+        <li>The Street</li>
+        <li>The Mash House</li>
+        <li>CC Blooms</li>
+        <li>Phillies</li>
+        <li>The Shed</li>
+        <li>The Rum Shack</li>
+        <li class="more">and many more</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Club nights and parties</h2>
+    <div>
+      <p>I'm available for club nights, guest slots, opening sets and private parties. If you run a night and need a DJ, get in touch.</p>
+    </div>
+  </section>
+  </div>
+
+  <div class="view" id="weddings">
+  <section class="section">
+    <h2>Weddings</h2>
+    <div>
+      <p>Your wedding should sound like you. I'm a queer DJ, so there is nothing to explain and nothing to tiptoe around. Your friends, your family and your people all get a dance floor that works for them.</p>
+      <div class="points">
+        <div><h3>Planned with you</h3><p>We agree your must-plays, your do-not-plays and your first dance before the day.</p></div>
+      </div>
+
+      <div class="arc">
+        <p class="arc-cap">A sample evening, by tempo</p>
+        <div class="arc-row" style="--t:.05"><span class="arc-l">Arrival drinks</span><span class="arc-t"><span class="arc-b" style="left:7.5%;width:30%"></span></span><span class="arc-v">93&ndash;105</span></div>
+        <div class="arc-row" style="--t:.2"><span class="arc-l">Dinner</span><span class="arc-t"><span class="arc-b" style="left:12.5%;width:37.5%"></span></span><span class="arc-v">95&ndash;110</span></div>
+        <div class="arc-row" style="--t:.6"><span class="arc-l">Floor opens</span><span class="arc-t"><span class="arc-b" style="left:55%;width:25%"></span></span><span class="arc-v">112&ndash;122</span></div>
+        <div class="arc-row" style="--t:1"><span class="arc-l">Peak</span><span class="arc-t"><span class="arc-b" style="left:80%;width:15%"></span></span><span class="arc-v">122&ndash;128</span></div>
+        <div class="arc-row axis" aria-hidden="true"><span class="arc-l"></span><span class="arc-t"><span style="left:0">90</span><span style="left:25%">100</span><span style="left:50%">110</span><span style="left:75%">120</span><span style="left:100%">130</span></span><span class="arc-v"></span></div>
+      </div>
+      <p class="note">Every night is shaped around the couple. Your first dance and your last song are yours to choose, at any tempo. Packages and prices on request.</p>
+      <p><a class="btn" href="#contact">Ask about your wedding</a></p>
+    </div>
+  </section>
+  </div>
+
+  <div class="view" id="set-list">
+  <section class="section">
+    <h2>In the crate</h2>
+    <div>
+      <p>A slice of the set list from my last gig, 25 of 46 tracks, listed by tempo from slow to fast. This is the pool I played from, not the running order.</p>
+      <ol class="set" id="set"></ol>
+    </div>
+  </section>
+  </div>
+
+  <div class="view" id="watch">
+  <section class="section">
+    <h2>Watch and listen</h2>
+    <div>
+      <div class="photos">
+        <img src="crowd.jpg" width="1000" height="1333" alt="A packed dance floor with hands in the air, lit red and purple" loading="lazy">
+        <img src="decks.jpg" width="1000" height="1778" alt="MILKY's decks and laptop in red light, with the crowd dancing behind" loading="lazy">
+      </div>
+      <figure class="clipfig">
+        <video class="clip" controls playsinline preload="metadata" poster="milky-poster.jpg" src="milky-clip.mp4" aria-label="MILKY playing to a packed floor at a recent gig"></video>
+        <figcaption>From my last gig. Press play for sound.</figcaption>
+      </figure>
+      <ul class="listen">
+        <li><b>Live set</b><span>Add Mixcloud or SoundCloud link</span></li>
+        <li><b>Wedding playlist</b><span>Add Spotify link</span></li>
+        <li><b>Club playlist</b><span>Add Spotify link</span></li>
+      </ul>
+    </div>
+  </section>
+  </div>
+
+  <div class="view" id="contact">
+  <section class="section">
+    <h2>Tell me about your night</h2>
+    <div>
+      <p>Send the date, the venue, roughly how many guests, and three songs you'd want on the floor. I'll come back with availability and a quote.</p>
+      <div class="contact">
+        <div><span>Email</span><a href="mailto:miaknani@hotmail.com">miaknani@hotmail.com</a></div>
+        <div><span>Instagram</span><a href="https://www.instagram.com/full.fat.milky/" target="_blank" rel="noopener">@full.fat.milky</a></div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <footer>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="#home">Home</a>
+      <a href="#weddings">Weddings</a>
+      <a href="#set-list">Set list</a>
+      <a href="#watch">Watch</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span>MILKY &middot; Queer DJ &middot; Glasgow</span><span>&copy; 2026</span></footer>
+</div>
+
+<script>
+(function () {
+  var tracks = [
+    [93, 'Partition', 'Beyoncé'],
+    [95, 'Fancy', 'Iggy Azalea'],
+    [95, 'The Next Episode', 'Dr. Dre'],
+    [117, 'Grapevine (Autograf Remix)', 'Marvin Gaye'],
+    [120, 'Call Me Maybe', 'Carly Rae Jepsen'],
+    [120, 'Boys', 'Lizzo'],
+    [120, 'Talking Body', 'Tove Lo'],
+    [120, 'Finally', 'Ce Ce Peniston'],
+    [122, 'Jamaican (Bam Bam)', 'Hugel'],
+    [122, 'Horny ’98', 'Mousse T. vs. Hot ’n’ Juicy'],
+    [123, 'Not Into It', 'Shift K3y'],
+    [123, 'Groovejet (extended vocal mix)', 'Spiller'],
+    [124, 'On The Regular', 'Shamir'],
+    [125, 'Lick (Fantasy)', 'Altego'],
+    [125, 'Opulence (Ryan Kenney Remix)', 'Brooke Candy'],
+    [125, 'Feel It (extended mix)', 'The Tamperer feat. Maya'],
+    [126, '212', 'Azealia Banks'],
+    [126, 'Titanium', 'David Guetta feat. Sia'],
+    [126, 'React', 'Switch Disco'],
+    [126, 'I Feel Love', 'Donna Summer'],
+    [127, 'Mr. Saxobeat (Extended Mix)', 'Alexandra Stan'],
+    [127, 'King Of My Castle', 'Wamdue Project'],
+    [127, 'Nasty Girl (Riff & Rays Remix)', 'Inaya Day'],
+    [128, 'Someone To Call My Lover (Hex Hector Mix)', 'Janet Jackson'],
+    [128, 'Put Your Hands Up 4 Detroit', 'Fedde Le Grand']
+  ];
+  var lo = 90, hi = 130;
+  var list = document.getElementById('set');
+  if (!list) return;
+  tracks.forEach(function (t) {
+    var p = Math.max(0, Math.min(1, (t[0] - lo) / (hi - lo)));
+    var li = document.createElement('li');
+    li.innerHTML = '<span class="bpm"></span><span class="trk"><b></b><i></i></span><span class="bar"><span></span></span>';
+    li.querySelector('.bpm').textContent = t[0];
+    li.querySelector('b').textContent = t[1];
+    li.querySelector('i').textContent = t[2];
+    var fill = li.querySelector('.bar span');
+    fill.style.setProperty('--w', (p * 100).toFixed(1) + '%');
+    fill.style.setProperty('--t', p.toFixed(3));
+    list.appendChild(li);
+  });
+})();
+
+(function () {
+  var names = ['home', 'weddings', 'set-list', 'watch', 'contact'];
+  var links = document.querySelectorAll('.nav a[data-nav]');
+  var brand = document.querySelector('.nav .brand');
+  function show() {
+    var h = (location.hash || '').replace('#', '');
+    if (names.indexOf(h) < 0) h = 'home';
+    names.forEach(function (n) { var v = document.getElementById(n); if (v) v.hidden = (n !== h); });
+    links.forEach(function (a) {
+      if (a.getAttribute('data-nav') === h) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    if (brand) brand.hidden = (h === 'home');
+  }
+  window.addEventListener('hashchange', function () { show(); window.scrollTo(0, 0); });
+  show();
+})();
+</script>
+</body>
+</html>
